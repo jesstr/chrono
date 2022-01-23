@@ -1,0 +1,7 @@
+/Default/
+/Release/
+/build/
+/.settings/
+build
+patched
+*.pyc
