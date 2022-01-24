@@ -6,7 +6,7 @@
 /**
   * @brief I2C Periferal Interface
   */
-#define I2C                                     I2C2
+#define I2C                                     I2C1
 
 /**
   * @brief Master Transfer Request Direction

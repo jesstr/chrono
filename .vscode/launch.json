@@ -1,0 +1,38 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "build/chrono-bar.elf",
+            "name": "Load",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            // "servertype": "stutil",
+            // "interface": "swd",
+            "device": "STM32L0x3",
+            "svdFile": "${workspaceRoot}/.vscode/STM32L0x3.svd",
+            "configFiles": [
+                "board/stm32l0discovery.cfg"
+            ]
+        },
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "build/chrono-bar.elf",
+            "name": "Attach",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            // "servertype": "stutil",
+            // "interface": "swd",
+            "device": "STM32L0x3",
+            "svdFile": "${workspaceRoot}/.vscode/STM32L0x3.svd",
+            "configFiles": [
+                "board/stm32l0discovery.cfg"
+            ]
+        }
+    ]
+}

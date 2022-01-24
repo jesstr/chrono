@@ -14,33 +14,32 @@ static u8g2_t u8g2;
 
 void Lcd_DrawMain(void)
 {
-
-static void DrawMain230V(void)
-{
     char buf[16];
     const uint8_t *font = u8g2_font_9x15_tf;
 
-    u8g2_SetFont(&u8g2, font);
+    for (uint8_t i = 0; i < 46; i++) {
+        // u8g2_ClearBuffer(&u8g2);
+        u8g2_FirstPage(&u8g2);
+        do {
+            u8g2_SetFont(&u8g2, font);
+            u8g2_DrawStr(&u8g2, 10, i, "Hello World!");
 
-    uint8_t y = 50;
+        } while (u8g2_NextPage(&u8g2));
+        // u8g2_SendBuffer(&u8g2);
+    }
 
-    u8g2_ClearBuffer(&u8g2);
-
-    u8g2_DrawUTF8Line(&u8g2, 0, y, u8g2_GetDisplayWidth(&u8g2), buf, 0, false);
-
-    u8g2_SendBuffer(&u8g2);
 }
 
 
 void Lcd_Init(void) {
-    u8g2_Setup_ssd1306_i2c_128x32_univision_f(&u8g2,
+    u8g2_Setup_ssd1306_i2c_128x32_univision_1(&u8g2,
         U8G2_R0,
         u8x8_byte_hw_i2c,
         psoc_gpio_and_delay_cb);
 
-    u8g2_SetI2CAddress(&u8g2, OLED_ADDRESS * 2);
+    u8g2_SetI2CAddress(&u8g2, OLED_ADDRESS << 1);
 
     osDelay(100);
     u8g2_InitDisplay(&u8g2);
-    // u8g2_SetPowerSave(&u8g2, 0);
+    u8g2_SetPowerSave(&u8g2, 0);
 }

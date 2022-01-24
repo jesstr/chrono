@@ -48,6 +48,9 @@
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
+osThreadId displayTaskHandle;
+uint32_t displayTaskBuffer[ 128 ];
+osStaticThreadDef_t displayTaskControlBlock;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -55,6 +58,7 @@ osThreadId defaultTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
+extern void displayTaskRoutine(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -120,6 +124,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of displayTask */
+  osThreadStaticDef(displayTask, displayTaskRoutine, osPriorityBelowNormal, 0, 128, displayTaskBuffer, &displayTaskControlBlock);
+  displayTaskHandle = osThreadCreate(osThread(displayTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

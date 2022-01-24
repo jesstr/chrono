@@ -21,7 +21,7 @@ void displayTaskRoutine(void const * argument) {
         event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);
         if (event.status == osEventMessage) {
             if (event.value.v == RELEASED(BTN_ENTER)) {
-                Lcd_DrawMenu();
+                ;
             }
         }
     }

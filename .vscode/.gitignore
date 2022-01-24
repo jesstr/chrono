@@ -1,0 +1,4 @@
+.cortex-debug.*
+settings.json
+ipch
+core
