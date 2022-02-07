@@ -61,6 +61,10 @@ void MX_USART2_UART_Init(void)
   GPIO_InitStruct.Alternate = LL_GPIO_AF_4;
   LL_GPIO_Init(USART_RX_GPIO_Port, &GPIO_InitStruct);
 
+  /* USART2 interrupt Init */
+  NVIC_SetPriority(USART2_IRQn, 3);
+  NVIC_EnableIRQ(USART2_IRQn);
+
   /* USER CODE BEGIN USART2_Init 1 */
 
   /* USER CODE END USART2_Init 1 */

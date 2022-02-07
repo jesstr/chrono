@@ -1,6 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configTOTAL_HEAP_SIZE,configUSE_TIMERS,FootprintOK
+FREERTOS.IPParameters=Tasks01,configTOTAL_HEAP_SIZE,configUSE_TIMERS,FootprintOK,Queues01
+FREERTOS.Queues01=uart2TxQueue,64,uint16_t,0,Dynamic,NULL,NULL
 FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;displayTask,-1,128,displayTaskRoutine,As external,NULL,Static,displayTaskBuffer,displayTaskControlBlock
 FREERTOS.configTOTAL_HEAP_SIZE=2048
 FREERTOS.configUSE_TIMERS=1
@@ -50,6 +51,7 @@ NVIC.SavedPendsvIrqHandlerGenerated=true
 NVIC.SavedSvcallIrqHandlerGenerated=true
 NVIC.SavedSystickIrqHandlerGenerated=true
 NVIC.SysTick_IRQn=true\:3\:0\:true\:false\:true\:true\:true\:true
+NVIC.USART2_IRQn=true\:3\:0\:false\:false\:true\:true\:true\:false
 PA13.GPIOParameters=GPIO_Label
 PA13.GPIO_Label=TMS
 PA13.Locked=true

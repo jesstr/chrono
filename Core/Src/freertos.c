@@ -51,6 +51,7 @@ osThreadId defaultTaskHandle;
 osThreadId displayTaskHandle;
 uint32_t displayTaskBuffer[ 128 ];
 osStaticThreadDef_t displayTaskControlBlock;
+osMessageQId uart2TxQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -115,6 +116,11 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* definition and creation of uart2TxQueue */
+  osMessageQDef(uart2TxQueue, 64, uint16_t);
+  uart2TxQueueHandle = osMessageCreate(osMessageQ(uart2TxQueue), NULL);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
