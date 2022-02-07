@@ -37,7 +37,7 @@ void Lcd_Init(void) {
         u8x8_byte_hw_i2c,
         psoc_gpio_and_delay_cb);
 
-    u8g2_SetI2CAddress(&u8g2, OLED_ADDRESS << 1);
+    u8g2_SetI2CAddress(&u8g2, OLED_ADDRESS);
 
     osDelay(100);
     u8g2_InitDisplay(&u8g2);

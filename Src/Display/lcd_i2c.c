@@ -27,7 +27,7 @@ void I2C_Send(uint8_t addr, uint8_t *pTransmitBuffer, uint8_t ubNbDataToTransmit
     /* Master Generate Start condition for a write request :              */
     /*    - to the Slave with a 7-Bit SLAVE_OWN_ADDRESS                   */
     /*    - with a auto stop condition generation when transmit all bytes */
-    LL_I2C_HandleTransfer(I2C, addr, LL_I2C_ADDRSLAVE_7BIT, ubNbDataToTransmit, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
+    LL_I2C_HandleTransfer(I2C, addr << 1, LL_I2C_ADDRSLAVE_7BIT, ubNbDataToTransmit, LL_I2C_MODE_AUTOEND, LL_I2C_GENERATE_START_WRITE);
 
     /* (2) Loop until end of transfer received (STOP flag raised) ***************/
     Timeout = I2C_SEND_TIMEOUT_TXIS_MS;
