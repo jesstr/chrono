@@ -3,6 +3,7 @@
 #include "u8g2.h"
 #include "u8x8.h"
 #include "i2c.h"
+#include "i2c_ll.h"
 
 
 uint8_t u8x8_byte_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
@@ -27,7 +28,7 @@ uint8_t u8x8_byte_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_p
             buf_idx = 0;
             break;
         case U8X8_MSG_BYTE_END_TRANSFER:
-            I2C_Send(u8x8_GetI2CAddress(u8x8), (uint8_t *)buffer, buf_idx);
+            I2Cx_WriteData(I2C1, u8x8_GetI2CAddress(u8x8), 0, 0, (uint8_t *)buffer, buf_idx);
             break;
         default:
         return 0;
