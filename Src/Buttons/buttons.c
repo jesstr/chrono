@@ -39,7 +39,7 @@ void Buttons_Init(void)
 
     for (button_id_t id = 0; id < MAX_BUTTONS_NUM; id++) {
         buttons[id].id = id;
-        buttons[id].port = GPIOC;
+        buttons[id].port = GPIOB;
         buttons[id].pin = 0;
         buttons[id].exti = 0;
         buttons[id].inlongpress = false;
@@ -51,18 +51,19 @@ void Buttons_Init(void)
         buttons[id].t_last = 0;
     }
 
-    buttons[BTN_ENTER].pin = LL_GPIO_PIN_13;
-    buttons[BTN_ENTER].exti = LL_EXTI_LINE_13;
+    buttons[BTN_ENTER].pin = LL_GPIO_PIN_4;
+    buttons[BTN_ENTER].exti = LL_EXTI_LINE_4;
     buttons[BTN_ENTER].timerId = osTimerCreate(osTimer(timerButtonEnter), osTimerPeriodic, NULL);
 
-    buttons[BTN_DOWN].pin = LL_GPIO_PIN_14;
-    buttons[BTN_DOWN].exti = LL_EXTI_LINE_14;
+    buttons[BTN_DOWN].pin = LL_GPIO_PIN_5;
+    buttons[BTN_DOWN].exti = LL_EXTI_LINE_5;
     buttons[BTN_DOWN].timerId = osTimerCreate(osTimer(timerButtonDown), osTimerPeriodic, NULL);
 
-    buttons[BTN_UP].pin = LL_GPIO_PIN_15;
-    buttons[BTN_UP].exti = LL_EXTI_LINE_15;
+    buttons[BTN_UP].pin = LL_GPIO_PIN_10;
+    buttons[BTN_UP].exti = LL_EXTI_LINE_10;
     buttons[BTN_UP].timerId = osTimerCreate(osTimer(timerButtonUp), osTimerPeriodic, NULL);
 
+    NVIC_SetPriority(EXTI4_15_IRQn, 3);
     NVIC_EnableIRQ(EXTI4_15_IRQn);
 }
 
@@ -70,12 +71,10 @@ void Buttons_Init(void)
 void Buttons_IRQHandler(void)
 {
     for (button_id_t id = 0; id < MAX_BUTTONS_NUM; id++) {
-        if ((LL_EXTI_IsActiveFallingFlag_0_31(buttons[id].exti) != RESET) ||
-            (LL_EXTI_IsActiveRisingFlag_0_31(buttons[id].exti) != RESET)) {
+        if (LL_EXTI_IsActiveFlag_0_31(buttons[id].exti)) {
             
-            /* Clear both flags */
-            LL_EXTI_ClearFallingFlag_0_31(buttons[id].exti);
-            LL_EXTI_ClearRisingFlag_0_31(buttons[id].exti);
+            /* Clear flag */
+            LL_EXTI_ClearFlag_0_31(buttons[id].exti);
 
             uint32_t ticks = osKernelSysTick();
             if (ticks - buttons[id].t_last >= DEBOUNCE_TIMEOUT) {
@@ -90,6 +89,7 @@ void Buttons_IRQHandler(void)
                 }
                 buttons[id].t_last = ticks;
             }
+            break;
         }
     }
 }

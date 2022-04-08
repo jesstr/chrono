@@ -24,6 +24,7 @@
 #include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "buttons.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -140,6 +141,12 @@ void USART2_IRQHandler(void)
 }
 
 /* USER CODE BEGIN 1 */
-
+/**
+  * @brief This function handles EXTI line 4 to 15 interrupts.
+  */
+void EXTI4_15_IRQHandler(void)
+{
+  Buttons_IRQHandler();
+}
 /* USER CODE END 1 */
 
