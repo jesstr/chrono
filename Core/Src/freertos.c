@@ -51,6 +51,9 @@ osThreadId defaultTaskHandle;
 osThreadId displayTaskHandle;
 uint32_t displayTaskBuffer[ 128 ];
 osStaticThreadDef_t displayTaskControlBlock;
+osThreadId irTaskHandle;
+uint32_t irTaskBuffer[ 128 ];
+osStaticThreadDef_t irTaskControlBlock;
 osMessageQId uart2TxQueueHandle;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -60,6 +63,7 @@ osMessageQId uart2TxQueueHandle;
 
 void StartDefaultTask(void const * argument);
 extern void displayTaskRoutine(void const * argument);
+extern void irTaskRoutine(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -134,6 +138,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of displayTask */
   osThreadStaticDef(displayTask, displayTaskRoutine, osPriorityBelowNormal, 0, 128, displayTaskBuffer, &displayTaskControlBlock);
   displayTaskHandle = osThreadCreate(osThread(displayTask), NULL);
+
+  /* definition and creation of irTask */
+  osThreadStaticDef(irTask, irTaskRoutine, osPriorityIdle, 0, 128, irTaskBuffer, &irTaskControlBlock);
+  irTaskHandle = osThreadCreate(osThread(irTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */

@@ -15,7 +15,7 @@ void displayTaskRoutine(void const * argument) {
     Buttons_Init();
 
     while (1) {
-        Lcd_DrawMain();
+        // Lcd_DrawMain();
 
         /* Check pressed button */
         event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);

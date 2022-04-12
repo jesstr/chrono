@@ -42,6 +42,7 @@ Core/Src/main.c \
 Core/Src/gpio.c \
 Core/Src/i2c.c \
 Core/Src/usart.c \
+Core/Src/tim.c \
 Core/Src/stm32l0xx_it.c \
 $(wildcard Src/*.c) \
 $(wildcard Src/Buttons/*.c) \
@@ -52,6 +53,7 @@ Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_dma.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_rcc.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_utils.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_exti.c \
+Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_tim.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_pwr.c \
 Drivers/STM32L0xx_HAL_Driver/Src/stm32l0xx_ll_usart.c \
 Core/Src/system_stm32l0xx.c \
@@ -68,6 +70,8 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
 $(wildcard Middlewares/Third_Party/printf/*.c) \
 $(wildcard Middlewares/Third_Party/i2c/it/*.c) \
+$(wildcard Middlewares/Third_Party/ll_ir_remote/*.c) \
+$(wildcard Middlewares/Third_Party/ll_ir_remote/ir_proto/*.c) \
 $(wildcard $(U8G2_DIR)/csrc/*.c) \
 $(wildcard $(U8G2_DIR)/addons/*.c)
 
@@ -149,6 +153,7 @@ C_INCLUDES =  \
 -IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0 \
 -IMiddlewares/Third_Party/printf \
 -IMiddlewares/Third_Party/i2c \
+-IMiddlewares/Third_Party/ll_ir_remote \
 -I$(U8G2_DIR)/csrc \
 -I$(U8G2_DIR)/addons
 
