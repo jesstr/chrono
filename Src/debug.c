@@ -9,9 +9,28 @@
 #define DEBUG_USART             USART2
 #define DEBUG_TX_TIMEOUT        200
 
-extern osMessageQId uart2TxQueueHandle;
+#define MAX_PRINT_DATA_LEN      16
 
-#define DEBUG_TX_QUEUE  uart2TxQueueHandle
+#define DEBUG_TX_QUEUE          uart2TxQueueHandle
+
+extern osMessageQId DEBUG_TX_QUEUE;
+
+
+void print_data(char *name, uint8_t *data, uint8_t len)
+{
+    printf("%s (%d) [", name, len);
+    for (uint8_t i = 0; i < (len > MAX_PRINT_DATA_LEN ? MAX_PRINT_DATA_LEN - 4 : len); i++) {
+        if (i > 0) printf(" ");
+        printf("%02x", data[i]);
+    }
+    if (len > MAX_PRINT_DATA_LEN) {
+        printf(" ...");
+        for (uint8_t i = len - 4; i < len; i++) {
+            printf(" %02x", data[i]);
+        }
+    }
+    printf("]\r\n");
+}
 
 
 void debug_tx_callback(void)
