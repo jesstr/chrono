@@ -70,8 +70,8 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0/port.c \
 $(wildcard Middlewares/Third_Party/printf/*.c) \
 $(wildcard Middlewares/Third_Party/i2c/it/*.c) \
-$(wildcard Middlewares/Third_Party/ll_ir_remote/*.c) \
-$(wildcard Middlewares/Third_Party/ll_ir_remote/ir_proto/*.c) \
+$(wildcard Middlewares/Third_Party/ir_ll/*.c) \
+$(wildcard Middlewares/Third_Party/ir_ll/private/*.c) \
 $(wildcard $(U8G2_DIR)/csrc/*.c) \
 $(wildcard $(U8G2_DIR)/addons/*.c)
 
@@ -153,7 +153,7 @@ C_INCLUDES =  \
 -IMiddlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM0 \
 -IMiddlewares/Third_Party/printf \
 -IMiddlewares/Third_Party/i2c \
--IMiddlewares/Third_Party/ll_ir_remote \
+-IMiddlewares/Third_Party/ir_ll \
 -I$(U8G2_DIR)/csrc \
 -I$(U8G2_DIR)/addons
 

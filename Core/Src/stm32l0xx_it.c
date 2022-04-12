@@ -24,6 +24,7 @@
 #include "task.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stm32l0xx_ll_tim.h"
 #include "buttons.h"
 #include "IRremote.h"
 /* USER CODE END Includes */
@@ -132,7 +133,7 @@ void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
   if (LL_TIM_IsActiveFlag_UPDATE(TIM2)) {
-    TIM_PeriodElapsedCallback();
+    IR_PeriodicTimerHandler();
     LL_TIM_ClearFlag_UPDATE(TIM2);
   }
   /* USER CODE END TIM2_IRQn 0 */
