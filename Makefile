@@ -228,6 +228,13 @@ gdb:
 	arm-none-eabi-gdb -x .gdbinit
 
 #######################################
+# programming
+#######################################
+
+fwflash:
+	st-flash --reset write build/chrono-bar.bin 0x08000000
+
+#######################################
 # dependencies
 #######################################
 -include $(wildcard $(BUILD_DIR)/*.d)
