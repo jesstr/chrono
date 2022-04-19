@@ -16,17 +16,37 @@
 extern osMessageQId DEBUG_TX_QUEUE;
 
 
-void print_data(char *name, uint8_t *data, uint8_t len)
+static void print_value(void *value, uint8_t size)
+{
+    if (!value) return;
+    switch (size) {
+    case 1:
+        printf("%02x", *(uint8_t*)value);
+        break;
+    case 2:
+        printf("%04x", *(uint16_t*)value);
+        break;
+    case 4:
+        printf("%08x", *(uint32_t*)value);
+        break;
+    default:
+        break;
+    }
+}
+
+
+void print_data(char *name, void *data, uint8_t size, uint8_t len)
 {
     printf("%s (%d) [", name, len);
     for (uint8_t i = 0; i < (len > MAX_PRINT_DATA_LEN ? MAX_PRINT_DATA_LEN - 4 : len); i++) {
         if (i > 0) printf(" ");
-        printf("%02x", data[i]);
+        print_value(data + i * size, size);
     }
     if (len > MAX_PRINT_DATA_LEN) {
         printf(" ...");
         for (uint8_t i = len - 4; i < len; i++) {
-            printf(" %02x", data[i]);
+            printf(" ");
+            print_value(data + i * size, size);
         }
     }
     printf("]\r\n");
