@@ -4,7 +4,7 @@
 #include "debug.h"
 #include "IRremote.h"
 
-decode_results results;
+static decode_results results;
 
 
 void irTaskRoutine(void const * argument)
@@ -15,9 +15,9 @@ void irTaskRoutine(void const * argument)
   printf("Waiting IR signal...\r\n");
 
   while(1) {
-    if (decode()) {
+    if (decode(&results)) {
       printf("Code: 0x%08X | Type: %s | Address: 0x%02X\r\n",
-        results.value, getProtocolString(), results.address);
+        results.value, getProtocolString(&results), results.address);
 
 #if 0
       printf("Raw: %d\r\n", results.rawlen - 1);
