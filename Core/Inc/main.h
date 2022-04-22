@@ -88,6 +88,8 @@ void Error_Handler(void);
 #define BLINKLED_GPIO_Port GPIOA
 #define ButtonDown_Pin LL_GPIO_PIN_10
 #define ButtonDown_GPIO_Port GPIOB
+#define BUZZER_Pin LL_GPIO_PIN_8
+#define BUZZER_GPIO_Port GPIOA
 #define TMS_Pin LL_GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin LL_GPIO_PIN_14

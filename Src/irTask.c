@@ -2,6 +2,7 @@
 #include "cmsis_os.h"
 #include "printf.h"
 #include "debug.h"
+#include "buzzer.h"
 #include "IRremote.h"
 
 static decode_results results;
@@ -29,6 +30,9 @@ void irTaskRoutine(void const * argument)
       printf("\r\n-----------------\r\n");
 #endif
 
+      if (results.decode_type != UNKNOWN) {
+        buzzer_beep(10);
+      }
       resume();
     } else {
       osDelay(100);
