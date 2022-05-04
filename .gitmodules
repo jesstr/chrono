@@ -1,3 +1,6 @@
 [submodule "Middlewares/Third_Party/ir_ll"]
 	path = Middlewares/Third_Party/ir_ll
 	url = git@github.com:jesstr/ir_ll.git
+[submodule "Middlewares/Third_Party/i2c_ll"]
+	path = Middlewares/Third_Party/i2c_ll
+	url = git@github.com:jesstr/i2c_ll.git
