@@ -133,10 +133,7 @@ void SysTick_Handler(void)
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
-  if (LL_TIM_IsActiveFlag_UPDATE(TIM2)) {
-    IR_PeriodicTimerHandler();
-    LL_TIM_ClearFlag_UPDATE(TIM2);
-  }
+  IR_TimerIRQHandler();
   /* USER CODE END TIM2_IRQn 0 */
   /* USER CODE BEGIN TIM2_IRQn 1 */
 

@@ -78,8 +78,8 @@ void Error_Handler(void);
 #define B1_GPIO_Port GPIOC
 #define IRSEND_Pin LL_GPIO_PIN_0
 #define IRSEND_GPIO_Port GPIOA
-#define IRRECIVE_Pin LL_GPIO_PIN_1
-#define IRRECIVE_GPIO_Port GPIOA
+#define IRRECEIVE_Pin LL_GPIO_PIN_1
+#define IRRECEIVE_GPIO_Port GPIOA
 #define USART_TX_Pin LL_GPIO_PIN_2
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin LL_GPIO_PIN_3

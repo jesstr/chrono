@@ -55,6 +55,9 @@ void MX_GPIO_Init(void)
   LL_IOP_GRP1_EnableClock(LL_IOP_GRP1_PERIPH_GPIOD);
 
   /**/
+  LL_GPIO_ResetOutputPin(IRSEND_GPIO_Port, IRSEND_Pin);
+
+  /**/
   LL_GPIO_ResetOutputPin(BLINKLED_GPIO_Port, BLINKLED_Pin);
 
   /**/
@@ -149,10 +152,12 @@ void MX_GPIO_Init(void)
   LL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /**/
-  GPIO_InitStruct.Pin = IRRECIVE_Pin;
-  GPIO_InitStruct.Mode = LL_GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pin = IRSEND_Pin;
+  GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+  GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
   GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-  LL_GPIO_Init(IRRECIVE_GPIO_Port, &GPIO_InitStruct);
+  LL_GPIO_Init(IRSEND_GPIO_Port, &GPIO_InitStruct);
 
   /**/
   GPIO_InitStruct.Pin = LL_GPIO_PIN_4;
