@@ -49,10 +49,10 @@
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId displayTaskHandle;
-uint32_t displayTaskBuffer[ 128 ];
+uint32_t displayTaskBuffer[ 256 ];
 osStaticThreadDef_t displayTaskControlBlock;
 osThreadId irTaskHandle;
-uint32_t irTaskBuffer[ 256 ];
+uint32_t irTaskBuffer[ 128 ];
 osStaticThreadDef_t irTaskControlBlock;
 osMessageQId uart2TxQueueHandle;
 
@@ -136,11 +136,11 @@ void MX_FREERTOS_Init(void) {
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of displayTask */
-  osThreadStaticDef(displayTask, displayTaskRoutine, osPriorityBelowNormal, 0, 128, displayTaskBuffer, &displayTaskControlBlock);
+  osThreadStaticDef(displayTask, displayTaskRoutine, osPriorityBelowNormal, 0, 256, displayTaskBuffer, &displayTaskControlBlock);
   displayTaskHandle = osThreadCreate(osThread(displayTask), NULL);
 
   /* definition and creation of irTask */
-  osThreadStaticDef(irTask, irTaskRoutine, osPriorityIdle, 0, 256, irTaskBuffer, &irTaskControlBlock);
+  osThreadStaticDef(irTask, irTaskRoutine, osPriorityIdle, 0, 128, irTaskBuffer, &irTaskControlBlock);
   irTaskHandle = osThreadCreate(osThread(irTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
