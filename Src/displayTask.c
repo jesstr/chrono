@@ -5,7 +5,7 @@
 #include "lcd.h"
 #include "buttons.h"
 
-#define SCREEN_UPDATE_TIMEOUT   500
+#define SCREEN_UPDATE_TIMEOUT   50
 
 
 void displayTaskRoutine(void const * argument) {
@@ -14,8 +14,13 @@ void displayTaskRoutine(void const * argument) {
     Lcd_Init();
     Buttons_Init();
 
+    Lcd_DrawMain();
+
+    enableIRIn();
+    blink(true);
+
     while (1) {
-        // Lcd_DrawMain();
+        Lcd_DrawIR();
 
         /* Check pressed button */
         event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);

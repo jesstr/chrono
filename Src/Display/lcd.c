@@ -6,28 +6,48 @@
 #include "cmsis_os.h"
 #include "printf.h"
 #include "buttons.h"
+#include "buzzer.h"
+#include "IRremote.h"
 
 #define OLED_ADDRESS        0x3C
 
 static u8g2_t u8g2;
+static decode_results results;
 
 
 void Lcd_DrawMain(void)
 {
-    char buf[16];
     const uint8_t *font = u8g2_font_9x15_tf;
+    u8g2_SetFont(&u8g2, font);
 
-    for (uint8_t i = 0; i < 46; i++) {
-        // u8g2_ClearBuffer(&u8g2);
+    u8g2_FirstPage(&u8g2);
+    do {
+        u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, "Ready!");
+    } while (u8g2_NextPage(&u8g2));
+}
+
+
+void Lcd_DrawIR(void)
+{
+    char line[24];
+
+    if (decode(&results)) {
+        sprintf(line, "%s%s\n0x%08X", getProtocolString(&results),
+            results.isRepeat ? "(R)" : "", results.value);
+
         u8g2_FirstPage(&u8g2);
         do {
-            u8g2_SetFont(&u8g2, font);
-            u8g2_DrawStr(&u8g2, 10, i, "Hello World!");
-
+            u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, line);
         } while (u8g2_NextPage(&u8g2));
-        // u8g2_SendBuffer(&u8g2);
-    }
 
+        if (results.decode_type != UNKNOWN) {
+            buzzer_beep(10);
+        }
+        printf("Code: 0x%08X | Type: %s | Address: 0x%02X\r\n",
+            results.value, getProtocolString(&results), results.address);
+
+        resume();
+    }
 }
 
 
