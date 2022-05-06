@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "stm32l0xx_ll_tim.h"
+#include "debug.h"
 #include "buttons.h"
 #include "IRremote.h"
 /* USER CODE END Includes */
