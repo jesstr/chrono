@@ -76,6 +76,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define B1_Pin LL_GPIO_PIN_13
 #define B1_GPIO_Port GPIOC
+#define SLEEP_STATE_Pin LL_GPIO_PIN_0
+#define SLEEP_STATE_GPIO_Port GPIOC
 #define IRSEND_Pin LL_GPIO_PIN_0
 #define IRSEND_GPIO_Port GPIOA
 #define IRRECEIVE_Pin LL_GPIO_PIN_1

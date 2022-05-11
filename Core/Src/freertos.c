@@ -77,11 +77,13 @@ void vApplicationGetTimerTaskMemory( StaticTask_t **ppxTimerTaskTCBBuffer, Stack
 __WEAK void PreSleepProcessing(uint32_t *ulExpectedIdleTime)
 {
 /* place for user code */
+  LL_GPIO_ResetOutputPin(SLEEP_STATE_GPIO_Port, SLEEP_STATE_Pin);
 }
 
 __WEAK void PostSleepProcessing(uint32_t *ulExpectedIdleTime)
 {
 /* place for user code */
+  LL_GPIO_SetOutputPin(SLEEP_STATE_GPIO_Port, SLEEP_STATE_Pin);
 }
 /* USER CODE END PREPOSTSLEEP */
 
