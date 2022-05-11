@@ -173,6 +173,17 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void const * argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
+
+  /* It`s unable in STM32CubeMX to configure SysTick`s frequency other
+     than SystemCoreClock. So it`s should be reconfigured manualy
+     after OS scheduler is started (see prvSetupTimerInterrupt( void )). */
+  SysTick->CTRL  = 0UL;
+  SysTick->VAL   = 0UL;
+  SysTick->LOAD  = ( configSYSTICK_CLOCK_HZ / configTICK_RATE_HZ ) - 1UL;
+  SysTick->CTRL  = (configSYSTICK_CLOCK_HZ == configCPU_CLOCK_HZ ? SysTick_CTRL_CLKSOURCE_Msk : 0) |
+                    SysTick_CTRL_TICKINT_Msk | SysTick_CTRL_ENABLE_Msk;
+
+  osThreadTerminate(NULL);
   /* Infinite loop */
   for(;;)
   {
