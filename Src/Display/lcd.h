@@ -13,4 +13,5 @@ extern uint8_t data_req_flags;
 void Lcd_Init(void);
 void Lcd_DrawMain(void);
 void Lcd_DrawIR(void);
+void Lcd_DrawMsg(char *msg);
 void Lcd_DrawMenu(void);

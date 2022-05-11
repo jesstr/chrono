@@ -51,6 +51,15 @@ void Lcd_DrawIR(void)
 }
 
 
+void Lcd_DrawMsg(char *msg)
+{
+    u8g2_FirstPage(&u8g2);
+    do {
+        u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, msg);
+    } while (u8g2_NextPage(&u8g2));
+}
+
+
 void Lcd_Init(void) {
     u8g2_Setup_ssd1306_i2c_128x32_univision_1(&u8g2,
         U8G2_R0,
