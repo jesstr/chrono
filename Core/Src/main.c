@@ -92,7 +92,9 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
+  LL_DBGMCU_EnableDBGSleepMode();
+  LL_DBGMCU_EnableDBGStopMode();
+  LL_DBGMCU_EnableDBGStandbyMode();
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
