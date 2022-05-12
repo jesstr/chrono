@@ -4,8 +4,16 @@
 #include "u8g2.h"
 #include "lcd.h"
 #include "buttons.h"
+#include "printf.h"
+// #define osObjectExternal
+#include "cmsis_os.h"
 
-#define SCREEN_UPDATE_TIMEOUT   50
+// extern osSemaphoreDef(lcdSem);
+// extern const osSemaphoreDef_t os_semaphore_def_lcdSem;
+
+
+
+#define SCREEN_UPDATE_TIMEOUT   0
 
 
 void displayTaskRoutine(void const * argument) {
@@ -20,13 +28,18 @@ void displayTaskRoutine(void const * argument) {
     blink(true);
 
     while (1) {
-        Lcd_DrawIR();
 
-        /* Check pressed button */
-        event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);
-        if (event.status == osEventMessage) {
-            if (event.value.v == RELEASED(BTN_ENTER)) {
-                ;
+        if (osSemaphoreWait(lcdSemHandle, portMAX_DELAY) == osOK) {
+
+            /* Draw received IR code if any */
+            Lcd_DrawIR();
+
+            /* Check pressed button */
+            event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);
+            if (event.status == osEventMessage) {
+                if (event.value.v == RELEASED(BTN_ENTER)) {
+                    ;
+                }
             }
         }
     }

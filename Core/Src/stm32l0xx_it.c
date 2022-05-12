@@ -28,6 +28,7 @@
 #include "debug.h"
 #include "buttons.h"
 #include "IRremote.h"
+#include "cmsis_os.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -133,7 +134,10 @@ void SysTick_Handler(void)
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
-  IR_TimerIRQHandler();
+  if (IR_TimerIRQHandler()) {
+    /* Request LCD update */
+    osSemaphoreRelease(lcdSemHandle);
+  }
   /* USER CODE END TIM2_IRQn 0 */
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
@@ -163,6 +167,8 @@ void USART2_IRQHandler(void)
 void EXTI4_15_IRQHandler(void)
 {
   Buttons_IRQHandler();
+  /* Request LCD update */
+  osSemaphoreRelease(lcdSemHandle);
 }
 /* USER CODE END 1 */
 

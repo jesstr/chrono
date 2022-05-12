@@ -1,6 +1,7 @@
 #MicroXplorer Configuration settings - do not modify
+FREERTOS.BinarySemaphores01=lcdSem,Dynamic,NULL
 FREERTOS.FootprintOK=true
-FREERTOS.IPParameters=Tasks01,configTOTAL_HEAP_SIZE,configUSE_TIMERS,FootprintOK,Queues01,configUSE_TICKLESS_IDLE
+FREERTOS.IPParameters=Tasks01,configTOTAL_HEAP_SIZE,configUSE_TIMERS,FootprintOK,Queues01,configUSE_TICKLESS_IDLE,BinarySemaphores01
 FREERTOS.Queues01=uart2TxQueue,64,uint16_t,0,Dynamic,NULL,NULL
 FREERTOS.Tasks01=defaultTask,0,128,StartDefaultTask,Default,NULL,Dynamic,NULL,NULL;displayTask,-1,256,displayTaskRoutine,As external,NULL,Static,displayTaskBuffer,displayTaskControlBlock;irTask,-3,128,irTaskRoutine,As external,NULL,Static,irTaskBuffer,irTaskControlBlock
 FREERTOS.configTOTAL_HEAP_SIZE=2048
