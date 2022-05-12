@@ -37,6 +37,12 @@ void displayTaskRoutine(void const * argument) {
             /* Check pressed button */
             event = osMessageGet(buttonsQueueHandle, SCREEN_UPDATE_TIMEOUT);
             if (event.status == osEventMessage) {
+
+                /* Debug output */
+                char msg[8];
+                snprintf(msg, sizeof(msg), "%d", event.value.v);
+                Lcd_DrawMsg(msg);
+
                 if (event.value.v == RELEASED(BTN_ENTER)) {
                     ;
                 }
