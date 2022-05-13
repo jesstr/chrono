@@ -40,7 +40,13 @@ void displayTaskRoutine(void const * argument) {
 
                 /* Debug output */
                 char msg[8];
-                snprintf(msg, sizeof(msg), "%d", event.value.v);
+                static uint8_t n = 0;
+                if (event.value.v == LONGPRESS(BTN_DOWN)) {
+                    n++;
+                } else {
+                    n = 0;
+                }
+                snprintf(msg, sizeof(msg), "%d [%d]", event.value.v, n);
                 Lcd_DrawMsg(msg);
 
                 if (event.value.v == RELEASED(BTN_ENTER)) {
