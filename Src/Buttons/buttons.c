@@ -71,18 +71,23 @@ void Buttons_Init(void)
 void Buttons_IRQHandler(void)
 {
     for (button_id_t id = 0; id < MAX_BUTTONS_NUM; id++) {
-        if (LL_EXTI_IsActiveFlag_0_31(buttons[id].exti)) {
+        uint32_t exti = buttons[id].exti;
+        if (LL_EXTI_IsActiveFlag_0_31(exti)) {
             
             /* Clear flag */
-            LL_EXTI_ClearFlag_0_31(buttons[id].exti);
+            LL_EXTI_ClearFlag_0_31(exti);
 
             uint32_t ticks = osKernelSysTick();
             if (ticks - buttons[id].t_last >= DEBOUNCE_TIMEOUT) {
-                if (Buttons_GetState(id)) {
+                if (LL_EXTI_IsEnabledFallingTrig_0_31(exti)) {
+                    LL_EXTI_DisableFallingTrig_0_31(exti);
+                    LL_EXTI_EnableRisingTrig_0_31(exti);
                     if (buttons[id].pressHandler != NULL) {
                         buttons[id].pressHandler(id, buttons[id].t_last);
                     }
-                } else {
+                } else if (LL_EXTI_IsEnabledRisingTrig_0_31(exti)) {
+                    LL_EXTI_DisableRisingTrig_0_31(exti);
+                    LL_EXTI_EnableFallingTrig_0_31(exti);
                     if (buttons[id].releaseHandler != NULL) {
                         buttons[id].releaseHandler(id, buttons[id].t_last);
                     }
