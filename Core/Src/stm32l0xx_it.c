@@ -134,7 +134,7 @@ void SysTick_Handler(void)
 void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
-  if (IR_TimerIRQHandler()) {
+  if (IR_timerIRQHandler()) {
     /* Request LCD update */
     osSemaphoreRelease(lcdSemHandle);
   }

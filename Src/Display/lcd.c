@@ -12,7 +12,7 @@
 #define OLED_ADDRESS        0x3C
 
 static u8g2_t u8g2;
-static decode_results results;
+static ir_decode_results ir_results;
 
 
 void Lcd_DrawMain(void)
@@ -31,22 +31,22 @@ void Lcd_DrawIR(void)
 {
     char line[24];
 
-    if (decode(&results)) {
-        sprintf(line, "%s%s\n0x%08X", getProtocolString(&results),
-            results.isRepeat ? "(R)" : "", results.value);
+    if (IR_decode(&ir_results)) {
+        sprintf(line, "%s%s\n0x%08X", IR_getProtocolString(&ir_results),
+            ir_results.isRepeat ? "(R)" : "", ir_results.value);
 
         u8g2_FirstPage(&u8g2);
         do {
             u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, line);
         } while (u8g2_NextPage(&u8g2));
 
-        if (results.decode_type != UNKNOWN) {
+        if (ir_results.decode_type != UNKNOWN) {
             buzzer_beep(10);
         }
         printf("Code: 0x%08X | Type: %s | Address: 0x%02X\r\n",
-            results.value, getProtocolString(&results), results.address);
+            ir_results.value, IR_getProtocolString(&ir_results), ir_results.address);
 
-        resume();
+        IR_resume();
     }
 }
 

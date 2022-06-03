@@ -5,6 +5,7 @@
 #include "lcd.h"
 #include "buttons.h"
 #include "printf.h"
+#include "IRremote.h"
 // #define osObjectExternal
 #include "cmsis_os.h"
 
@@ -24,8 +25,8 @@ void displayTaskRoutine(void const * argument) {
 
     Lcd_DrawMain();
 
-    enableIRIn();
-    blink(true);
+    IR_enableIRIn();
+    IR_blink(true);
 
     while (1) {
 
