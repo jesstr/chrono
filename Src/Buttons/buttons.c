@@ -6,6 +6,7 @@
 #include "cmsis_os.h"
 #include "buttons.h"
 #include "printf.h"
+#include "main.h"
 
 #define DEBOUNCE_TIMEOUT            50
 #define BUTTONS_QUEUE_SIZE          8
@@ -128,6 +129,7 @@ static void LongPressHandler(void const *arg)
     }
     buttons[id].inlongpress = true;
     osMessagePut(buttonsQueueHandle, event, 0);
+    osSemaphoreRelease(lcdSemHandle);
 
     if (buttons[id].period > LONGPRESS_SHORT_DELAY) {
         /* Accelerate repeat events speed for all buttons, except ENTER */
