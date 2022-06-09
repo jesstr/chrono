@@ -23,7 +23,7 @@ void displayTaskRoutine(void const * argument) {
     Lcd_Init();
     Buttons_Init();
 
-    Lcd_DrawMain();
+    Lcd_DrawIntro();
 
     IR_enableIRIn();
     IR_blink(true);

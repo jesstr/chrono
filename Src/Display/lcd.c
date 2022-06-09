@@ -3,6 +3,7 @@
 #include "u8g2.h"
 #include "u8g2_cb.h"
 #include "lcd.h"
+#include "pics.h"
 #include "cmsis_os.h"
 #include "printf.h"
 #include "buttons.h"
@@ -24,6 +25,28 @@ void Lcd_DrawMain(void)
     do {
         u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, "Ready!");
     } while (u8g2_NextPage(&u8g2));
+}
+
+
+void Lcd_DrawIntro(void)
+{
+    const uint8_t *font = u8g2_font_9x15_tf;
+    u8g2_SetFont(&u8g2, font);
+
+    u8g2_uint_t y_offset = 5;
+    u8g2_uint_t line_y = u8g2.height / 2 + bike_height / 2 + y_offset;
+    u8g2_uint_t bike_y = u8g2.height / 2 - bike_height / 2 + y_offset;
+
+    for (uint8_t i = 0; i < u8g2.width - bike_width; i += 3) {
+        u8g2_FirstPage(&u8g2);
+        do {
+            u8g2_DrawLine(&u8g2, 0, line_y, i, line_y);
+            u8g2_DrawXBM(&u8g2, i, bike_y, bike_width, bike_height, bike_bits);
+            if (i + 3 >= u8g2.width - bike_width) {
+                u8g2_DrawUTF8Line(&u8g2, 5, line_y - y_offset, u8g2.width - bike_width, "Ready?", 0, 0);
+            }
+        } while (u8g2_NextPage(&u8g2));
+    }
 }
 
 
