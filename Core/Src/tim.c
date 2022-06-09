@@ -108,6 +108,43 @@ void MX_TIM6_Init(void)
   /* USER CODE END TIM6_Init 2 */
 
 }
+/* TIM21 init function */
+void MX_TIM21_Init(void)
+{
+
+  /* USER CODE BEGIN TIM21_Init 0 */
+
+  /* USER CODE END TIM21_Init 0 */
+
+  LL_TIM_InitTypeDef TIM_InitStruct = {0};
+
+  /* Peripheral clock enable */
+  LL_APB2_GRP1_EnableClock(LL_APB2_GRP1_PERIPH_TIM21);
+
+  /* TIM21 interrupt Init */
+  NVIC_SetPriority(TIM21_IRQn, 3);
+  NVIC_EnableIRQ(TIM21_IRQn);
+
+  /* USER CODE BEGIN TIM21_Init 1 */
+
+  /* USER CODE END TIM21_Init 1 */
+  TIM_InitStruct.Prescaler = 24000 - 1;
+  TIM_InitStruct.CounterMode = LL_TIM_COUNTERMODE_UP;
+  TIM_InitStruct.Autoreload = 60000;
+  TIM_InitStruct.ClockDivision = LL_TIM_CLOCKDIVISION_DIV1;
+  LL_TIM_Init(TIM21, &TIM_InitStruct);
+  LL_TIM_EnableARRPreload(TIM21);
+  LL_TIM_SetClockSource(TIM21, LL_TIM_CLOCKSOURCE_INTERNAL);
+  LL_TIM_SetTriggerOutput(TIM21, LL_TIM_TRGO_RESET);
+  LL_TIM_DisableMasterSlaveMode(TIM21);
+  /* USER CODE BEGIN TIM21_Init 2 */
+
+  LL_TIM_ClearFlag_UPDATE(TIM21);
+  LL_TIM_EnableIT_UPDATE(TIM21);
+  LL_TIM_EnableCounter(TIM21);
+  /* USER CODE END TIM21_Init 2 */
+
+}
 
 /* USER CODE BEGIN 1 */
 

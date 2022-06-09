@@ -103,6 +103,7 @@ int main(void)
   MX_I2C1_Init();
   MX_TIM2_Init();
   MX_TIM6_Init();
+  MX_TIM21_Init();
   /* USER CODE BEGIN 2 */
   I2Cx_Init(I2C1);
   /* USER CODE END 2 */

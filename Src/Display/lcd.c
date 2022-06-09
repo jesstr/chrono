@@ -8,6 +8,8 @@
 #include "printf.h"
 #include "buttons.h"
 #include "buzzer.h"
+#include "ts.h"
+#include "tim.h"
 #include "IRremote.h"
 
 #define OLED_ADDRESS        0x3C
@@ -55,8 +57,22 @@ void Lcd_DrawIR(void)
     char line[24];
 
     if (IR_decode(&ir_results)) {
-        sprintf(line, "%s%s\n0x%08X", IR_getProtocolString(&ir_results),
-            ir_results.isRepeat ? "(R)" : "", ir_results.value);
+
+        if (ir_results.decode_type != UNKNOWN) {
+            /* Check received code */
+            if (ir_results.value == 0x00FF38C7) {
+                /* Clear timestamp */
+                ts.m = 0;
+                ts.ms = 0;
+                LL_TIM_SetCounter(TIM21, 0);
+            }
+            sprintf(line, "%s%s\n%u:%u.%03u", IR_getProtocolString(&ir_results),
+                ir_results.isRepeat ? "(R)" : "", ts.m, ts.ms / 1000, ts.ms % 1000);
+            printf("%u:%u.%03u\r\n", ts.m, ts.ms / 1000, ts.ms % 1000);
+        } else {
+            sprintf(line, "%s%s\n0x%08X", IR_getProtocolString(&ir_results),
+                ir_results.isRepeat ? "(R)" : "", ir_results.value);
+        }
 
         u8g2_FirstPage(&u8g2);
         do {
@@ -78,7 +94,7 @@ void Lcd_DrawMsg(char *msg)
 {
     u8g2_FirstPage(&u8g2);
     do {
-        u8g2_DrawUTF8Lines(&u8g2, 10, 10, u8g2_GetDisplayWidth(&u8g2), 16, msg);
+        u8g2_DrawUTF8Lines(&u8g2, 10, 12, u8g2_GetDisplayWidth(&u8g2), 16, msg);
     } while (u8g2_NextPage(&u8g2));
 }
 

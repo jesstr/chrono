@@ -27,6 +27,7 @@
 #include "stm32l0xx_ll_tim.h"
 #include "debug.h"
 #include "buttons.h"
+#include "ts.h"
 #include "IRremote.h"
 #include "cmsis_os.h"
 /* USER CODE END Includes */
@@ -135,6 +136,8 @@ void TIM2_IRQHandler(void)
 {
   /* USER CODE BEGIN TIM2_IRQn 0 */
   if (IR_timerIRQHandler()) {
+    /* Save signal timestamp */
+    ts.ms = LL_TIM_GetCounter(TIM21);
     /* Request LCD update */
     osSemaphoreRelease(lcdSemHandle);
   }
@@ -142,6 +145,22 @@ void TIM2_IRQHandler(void)
   /* USER CODE BEGIN TIM2_IRQn 1 */
 
   /* USER CODE END TIM2_IRQn 1 */
+}
+
+/**
+  * @brief This function handles TIM21 global interrupt.
+  */
+void TIM21_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM21_IRQn 0 */
+  if (LL_TIM_IsActiveFlag_UPDATE(TIM21)) {
+    ts.m++;
+    LL_TIM_ClearFlag_UPDATE(TIM21);
+  }
+  /* USER CODE END TIM21_IRQn 0 */
+  /* USER CODE BEGIN TIM21_IRQn 1 */
+
+  /* USER CODE END TIM21_IRQn 1 */
 }
 
 /**
